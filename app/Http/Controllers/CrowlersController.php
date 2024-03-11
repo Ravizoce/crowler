@@ -102,8 +102,12 @@ class   CrowlersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Crowlers $crowlers)
+    public function destroy($crowlers)
     {
         //
+        // dd($crowlers);
+        Url::where('crowlers_id',$crowlers)->delete();
+        Crowlers::where('id',$crowlers)->delete();
+        return redirect()->route('crowler.index');
     }
 }

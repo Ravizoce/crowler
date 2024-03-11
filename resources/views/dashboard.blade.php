@@ -11,10 +11,10 @@
             <div class="bg-dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-white-900 dark:text-white">
                     <div class="card-deck">
-                        <div class="row">
-                            <div class="m-4 col-md-5 card bg-gray-800">
+                        <div class="row justify-content-center"">
+                            <div class="m-4  card bg-gray-800" >
                                 @if (empty($count) || $count == 0)
-                                    <div class="card-body dark:text-white">
+                                    <div class="card-body dark:text-white ">
                                         <h1 class="font-weight-bold">Last Complet crowl</h1>
                                         <dl>
                                             <dt>Start</dt>
@@ -41,16 +41,15 @@
                                         <h1 class="font-weight-bold h4">Last Complet crowl</h1>
                                         <dl>
                                             <dt>Start</dt>
-                                            <dl>{{ $startDate }}</dl>
+                                            <dl>{{ $startDateString }}</dl>
 
                                             <dt>End</dt>
-                                            <dl>{{ $endDate }}</dl>
+                                            <dl>{{ $endDateString }}</dl>
 
                                             <dt>Total Duration</dt>
                                             <dl>
                                                 @php
-                                                    echo $diffString = $diff;
-
+                                                    echo $differ;
                                                 @endphp
                                             </dl>
 
@@ -68,11 +67,6 @@
         <h1>
         </h1>
     </div>
-
-    <div id="loading-screen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-        <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
-    </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(function() {

@@ -15,7 +15,7 @@ class UrlsController extends Controller
     {
         $crowler_id = session()->get('crowler_id');
         // dd($message);
-        $urls = Url::where('crowlers_id', $crowler_id)->get();
+        $urls = Url::where('crowlers_id', $crowler_id)->paginate(100);
         return view('UrlInspector', compact("urls"));
     }
 
@@ -43,16 +43,16 @@ class UrlsController extends Controller
         $options = array('http' => array('method' => "GET", 'headers' => "User-Agent: htmlbot0.1\n"));
 
         $context = stream_context_create($options);
-
+        $url = "https://www.onlinekhabar.com/";
         $doc = new DOMDocument();
         @$content = @file_get_contents($url, false, $context);
 
 
-        if ($content === false) {
-            return '{"error": "URL not accessible or invalid"}';
-        }
-        @$doc->loadHTML(@$content);
-
+        // if ($content === false) {
+        //     return '{"error": "URL not accessible or invalid"}';
+        // }
+        @$doc->loadHTML($content);
+            // dd($doc);
         $title = $doc->getElementsByTagName("title");
         if ($title->length > 0) {
             $title = $title->item(0)->nodeValue;
@@ -60,12 +60,10 @@ class UrlsController extends Controller
 
         $description = "";
         $Keyword = "";
-        $metas = $doc->getElementsByTagName("meta");
+        $metas = $doc->getElementsByTagName('meta');
+        dd($metas);
         foreach ($metas as $meta) {
             if ($meta->getAttribute("name") == strtolower("description")) {
-                $description = $meta->getAttribute("content");
-            }
-            if ($meta->getAttribute("name") == strtolower("")) {
                 $description = $meta->getAttribute("content");
             }
             if ($meta->getAttribute("name") == strtolower("$Keyword")) {
@@ -73,7 +71,11 @@ class UrlsController extends Controller
             }
         }
 
-        return '{"Title":"' . $title . '", "Description":"' . str_replace("\n", "", $description) . '", "keywords":"' . $Keyword . '"}';
+        $hello=[
+            "Title"=> $title ,
+            "Description"=> $description,
+            "keywords"=> $Keyword ];
+        return view("metadata",compact('hello') );
     }
 
     /**

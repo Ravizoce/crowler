@@ -27,7 +27,7 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::resource('crowler',CrowlersController::class);
     Route::resource('scrap',ScrapingController::class);
     Route::resource('Urls',UrlsController::class);
-    Route::post('/dashboard', [ScrapingController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard/{id}', [ScrapingController::class, 'dashboard'])->name('dashboard');
 });
 
 Route::middleware('auth')->group(function () {

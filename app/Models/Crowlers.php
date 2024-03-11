@@ -15,5 +15,8 @@ class Crowlers extends Model
         'url',
         'user_id',
         'author',
+        'start',
+        'end',
+        'diff',
     ];
 }
